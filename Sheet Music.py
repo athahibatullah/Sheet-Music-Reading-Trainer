@@ -19,6 +19,17 @@ pygame.display.set_caption("Sheet Music Read")
 screen = pygame.display.set_mode((400, 300), RESIZABLE, 32)
 
 #print(i)
+
+NotelistSharp = ["A","A#","B","C","C#","D","D#","E","F","F#","G","G#"]
+def NoteDecider(Note):
+    decrement = 0
+    while Note >= 33:
+        Note -= 12
+        decrement += 1    
+    Note -= 21
+    Note = NotelistSharp[Note]
+    return Note
+
 going = True
 while going:
     events = event_get()
@@ -28,7 +39,13 @@ while going:
         if e.type in [KEYDOWN]:
                 going = False
     if i.poll():
-        print(i.read(10))
+        # Note = i.read(10)
+        # print(Note)
+        NoteRead = i.read(10)
+        if NoteRead[0][0][2] != 0:
+            # print ("full midi_events " + str(NoteRead))
+            # print ("my midi note is " + str(NoteRead[0][0][1]))
+            print(NoteDecider(NoteRead[0][0][1]))
 
 print("exit button clicked.")
 i.close()
