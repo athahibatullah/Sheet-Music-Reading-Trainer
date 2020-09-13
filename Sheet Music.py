@@ -21,14 +21,23 @@ screen = pygame.display.set_mode((400, 300), RESIZABLE, 32)
 #print(i)
 
 NotelistSharp = ["A","A#","B","C","C#","D","D#","E","F","F#","G","G#"]
+NotelistFlat = ["A","B♭","B","C","D♭","D","E♭","E","F","G♭","G","A♭"]
+
 def NoteDecider(Note):
-    decrement = 0
-    while Note >= 33:
-        Note -= 12
-        decrement += 1    
-    Note -= 21
-    Note = NotelistSharp[Note]
+    if(Note >= 21 and Note <= 23):
+        Note -= 21
+        Note = NotelistSharp[Note] + "0"
+    else:
+        decrement = 1
+        while Note >= 36:
+            Note -= 12
+            decrement += 1
+            Reduced = True
+        Note -= 33
+        Note = NotelistSharp[Note] + str(decrement)
     return Note
+
+
 
 going = True
 while going:
