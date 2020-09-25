@@ -2,13 +2,14 @@ NotelistSharp = ["A","A#","B","C","C#","D","D#","E","F","F#","G","G#"]
 NotelistFlat = ["A","B♭","B","C","D♭","D","E♭","E","F","G♭","G","A♭"]
 
 class Piano:
-    def __init__(self, color, noteid, x, y ,keylong, keywidth):
+    def __init__(self, color, noteid, x, y ,keylong, keywidth, pressed):
         self.color = color
         self.noteid = noteid
         self.x = x
         self.y = y
         self.keylong = keylong
         self.keywidth = keywidth
+        self.pressed = pressed
 
 def NoteDecider(Note):
     if(Note >= 21 and Note <= 23):
@@ -34,23 +35,23 @@ ypos = 550
 #         list.append(Piano("white",i,25,xpos,11,60))
 #     xpos += 22
 
-for i in range(1,53):
-    list.append(Piano("white",i,xpos,ypos,22,100))
+for i in range(52):    
     if(i % 7 == 1):
-        list.append(Piano("black",i,xpos-4,ypos,11,60))
+        list.append(Piano("black",i,xpos-4,ypos,11,60,False))
         # print(str(j) + " " + str(i))
         # pygame.draw.rect(screen,colorr,(posisix-4,posisiy,lebartuts,panjangtuts))
     elif(i % 7 == 3 and i != 52):
-        list.append(Piano("black",i,xpos-6,ypos,11,60))
+        list.append(Piano("black",i,xpos-6,ypos,11,60,False))
         # pygame.draw.rect(screen,colorr,(posisix-6,posisiy,lebartuts,panjangtuts))
     elif(i % 7 == 4):
-        list.append(Piano("black",i,xpos-4,ypos,11,60))
+        list.append(Piano("black",i,xpos-4,ypos,11,60,False))
         # pygame.draw.rect(screen,colorr,(posisix-4,posisiy,lebartuts,panjangtuts))
     elif(i % 7 == 6):
-        list.append(Piano("black",i,xpos-6,ypos,11,60))
+        list.append(Piano("black",i,xpos-6,ypos,11,60,False))
         # pygame.draw.rect(screen,colorr,(posisix-6,posisiy,lebartuts,panjangtuts))
     elif(i % 7 == 0 and i != 0 ):
-        list.append(Piano("black",i,xpos-5,ypos,11,60))
+        list.append(Piano("black",i,xpos-5,ypos,11,60,False))
+    list.append(Piano("white",i,xpos,ypos,22,100,False))
     xpos += 22
 
 j = 0

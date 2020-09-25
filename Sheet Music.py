@@ -34,50 +34,32 @@ blue = (0, 0, 128)
 NotelistSharp = ["A","A#","B","C","C#","D","D#","E","F","F#","G","G#"]
 NotelistFlat = ["A","B♭","B","C","D♭","D","E♭","E","F","G♭","G","A♭"]
 
-# def NoteDecider(Note):
-#     if(Note >= 21 and Note <= 23):
-#         Note -= 21
-#         Note = NotelistSharp[Note] + "0"
-#     else:
-#         decrement = 1
-#         while Note >= 36:
-#             Note -= 12
-#             decrement += 1
-#         Note -= 33
-#         Note = NotelistSharp[Note] + str(decrement)
-#     return Note
-
-# def DrawPiano(colorr,posisix,posisiy,lebartuts,panjangtuts):
-#     pygame.draw.rect(screen,colorr,(posisix,posisiy,22,100),2)
-#     if(j % 7 == 1):
-#         pygame.draw.rect(screen,colorr,(posisix-4,posisiy,lebartuts,panjangtuts))
-#     elif(j % 7 == 3):
-#         pygame.draw.rect(screen,colorr,(posisix-6,posisiy,lebartuts,panjangtuts))
-#     elif(j % 7 == 4):
-#         pygame.draw.rect(screen,colorr,(posisix-4,posisiy,lebartuts,panjangtuts))
-#     elif(j % 7 == 6):
-#         pygame.draw.rect(screen,colorr,(posisix-6,posisiy,lebartuts,panjangtuts))
-#     elif(j % 7 == 0 and j != 0):
-#         pygame.draw.rect(screen,colorr,(posisix-5,posisiy,lebartuts,panjangtuts))
-
 going = True
 posisix = 25
 posisiy = 550
 panjangtuts = 60
 lebartuts = 11
 tekan = True
-colors = black
+
 for PianoObj in Pianos.list:
         print(str(PianoObj.noteid) + " " + PianoObj.color)
+
 while going:
     screen.fill(white)
     #pygame.draw.rect(screen,blue,(25, 550, 1145, 100), 3)
     # while(bikin):
     for PianoObj in Pianos.list:
         if PianoObj.color == "white":
-            pygame.draw.rect(screen,black,(PianoObj.x,PianoObj.y,PianoObj.keylong,PianoObj.keywidth),2)
+            if PianoObj.pressed:
+                pygame.draw.rect(screen,green,(PianoObj.x,PianoObj.y,PianoObj.keylong,PianoObj.keywidth))
+                pygame.draw.rect(screen,black,(PianoObj.x,PianoObj.y,PianoObj.keylong,PianoObj.keywidth),2)
+            else:    
+                pygame.draw.rect(screen,black,(PianoObj.x,PianoObj.y,PianoObj.keylong,PianoObj.keywidth),2)
         elif PianoObj.color == "black":
-            pygame.draw.rect(screen,black,(PianoObj.x,PianoObj.y,PianoObj.keylong,PianoObj.keywidth))
+            if PianoObj.pressed:
+                pygame.draw.rect(screen,green,(PianoObj.x,PianoObj.y,PianoObj.keylong,PianoObj.keywidth))
+            else:    
+                pygame.draw.rect(screen,black,(PianoObj.x,PianoObj.y,PianoObj.keylong,PianoObj.keywidth))
         # DrawPiano(colors,posisix,posisiy,lebartuts,panjangtuts)
         # posisix += 22
         # print(str(PianoObj.noteid) + " " +PianoObj.color)
@@ -105,17 +87,21 @@ while going:
         # print(Note)
         NoteRead = i.read(10)
         # while(i.poll() ):
+        NoteID = NoteRead[0][0][1]
         if NoteRead[0][0][2] != 0:
             # print ("full midi_events " + str(NoteRead))
             # print ("my midi note is " + str(NoteRead[0][0][1]))
             print(Pianos.NoteDecider(NoteRead[0][0][1]) + " " + str(NoteRead[0][0][1]))
             # print(i.read(10)[0][0][2])
             tekan = True
-            colors = green
+            Pianos.list[NoteID-21].pressed = True
+            # print(Pianos.list[NoteID-21].color)
+            # print(NoteID-21)
+            # print(str(Pianos.list[NoteID-21].x) + " " + Pianos.list[NoteID-21].color)
             # DrawPiano(green,posisix,posisiy,lebartuts,panjangtuts)
         else:
             tekan = False
-            colors = black
+            Pianos.list[NoteID-21].pressed = False
             # DrawPiano(black,posisix,posisiy,lebartuts,panjangtuts)
 
     pygame.display.update()  
