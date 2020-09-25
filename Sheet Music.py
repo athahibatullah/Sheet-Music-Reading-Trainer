@@ -3,7 +3,7 @@ sys.path.insert(1,'Lib\site-packages') #to get all the package
 import pygame
 import pygame.midi
 from pygame.locals import *
-import Piano
+import Pianos
 # import random
 pygame.init()
 
@@ -34,18 +34,18 @@ blue = (0, 0, 128)
 NotelistSharp = ["A","A#","B","C","C#","D","D#","E","F","F#","G","G#"]
 NotelistFlat = ["A","B♭","B","C","D♭","D","E♭","E","F","G♭","G","A♭"]
 
-def NoteDecider(Note):
-    if(Note >= 21 and Note <= 23):
-        Note -= 21
-        Note = NotelistSharp[Note] + "0"
-    else:
-        decrement = 1
-        while Note >= 36:
-            Note -= 12
-            decrement += 1
-        Note -= 33
-        Note = NotelistSharp[Note] + str(decrement)
-    return Note
+# def NoteDecider(Note):
+#     if(Note >= 21 and Note <= 23):
+#         Note -= 21
+#         Note = NotelistSharp[Note] + "0"
+#     else:
+#         decrement = 1
+#         while Note >= 36:
+#             Note -= 12
+#             decrement += 1
+#         Note -= 33
+#         Note = NotelistSharp[Note] + str(decrement)
+#     return Note
 
 # def DrawPiano(colorr,posisix,posisiy,lebartuts,panjangtuts):
 #     pygame.draw.rect(screen,colorr,(posisix,posisiy,22,100),2)
@@ -67,18 +67,20 @@ panjangtuts = 60
 lebartuts = 11
 tekan = True
 colors = black
+for PianoObj in Pianos.list:
+        print(str(PianoObj.noteid) + " " + PianoObj.color)
 while going:
     screen.fill(white)
     #pygame.draw.rect(screen,blue,(25, 550, 1145, 100), 3)
     # while(bikin):
-    for PianoObj in Piano.list:
-        # print(str(PianoObj.noteid) + " " + str(PianoObj.color) + " " + PianoObj.NoteDecider(PianoObj.noteid))
+    for PianoObj in Pianos.list:
         if PianoObj.color == "white":
             pygame.draw.rect(screen,black,(PianoObj.x,PianoObj.y,PianoObj.keylong,PianoObj.keywidth),2)
         elif PianoObj.color == "black":
             pygame.draw.rect(screen,black,(PianoObj.x,PianoObj.y,PianoObj.keylong,PianoObj.keywidth))
         # DrawPiano(colors,posisix,posisiy,lebartuts,panjangtuts)
         # posisix += 22
+        # print(str(PianoObj.noteid) + " " +PianoObj.color)
 
     # posisix = 25
 
@@ -106,7 +108,7 @@ while going:
         if NoteRead[0][0][2] != 0:
             # print ("full midi_events " + str(NoteRead))
             # print ("my midi note is " + str(NoteRead[0][0][1]))
-            print(NoteDecider(NoteRead[0][0][1]) + " " + str(NoteRead[0][0][1]))
+            print(Pianos.NoteDecider(NoteRead[0][0][1]) + " " + str(NoteRead[0][0][1]))
             # print(i.read(10)[0][0][2])
             tekan = True
             colors = green
